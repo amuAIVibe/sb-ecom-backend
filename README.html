@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc 3.10" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>sb-ecom API Documentation</title>
+  <style>
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code { counter-reset: source-line 0; }
+    pre.numberSource code > span { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before {
+      content: counter(source-line);
+      position: relative; left: -1em; text-align: right; vertical-align: baseline;
+      border: none; display: inline-block;
+      -webkit-touch-callout: none; -webkit-user-select: none;
+      -khtml-user-select: none; -moz-user-select: none;
+      -ms-user-select: none; user-select: none;
+      padding: 0 4px; width: 4em;
+    }
+    pre.numberSource { margin-left: 3em; padding-left: 4px; }
+    div.sourceCode { color: #cccccc; background-color: #303030; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ffcfaf; }
+    code span.an { color: #7f9f7f; font-weight: bold; }
+    code span.at { }
+    code span.bn { color: #dca3a3; }
+    code span.bu { }
+    code span.cf { color: #f0dfaf; }
+    code span.ch { color: #dca3a3; }
+    code span.cn { color: #dca3a3; font-weight: bold; }
+    code span.co { color: #7f9f7f; }
+    code span.cv { color: #7f9f7f; font-weight: bold; }
+    code span.do { color: #7f9f7f; }
+    code span.dt { color: #dfdfbf; }
+    code span.dv { color: #dcdccc; }
+    code span.er { color: #c3bf9f; }
+    code span.ex { }
+    code span.fl { color: #c0bed1; }
+    code span.fu { color: #efef8f; }
+    code span.im { }
+    code span.in { color: #7f9f7f; font-weight: bold; }
+    code span.kw { color: #f0dfaf; }
+    code span.op { color: #f0efd0; }
+    code span.ot { color: #efef8f; }
+    code span.pp { color: #ffcfaf; font-weight: bold; }
+    code span.sc { color: #dca3a3; }
+    code span.ss { color: #cc9393; }
+    code span.st { color: #cc9393; }
+    code span.va { }
+    code span.vs { color: #cc9393; }
+    code span.wa { color: #7f9f7f; font-weight: bold; }
+
+    /* Enhanced documentation styles */
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; max-width: 1100px; margin: 0 auto; padding: 2rem; line-height: 1.6; color: #24292e; }
+    h1 { border-bottom: 2px solid #e1e4e8; padding-bottom: 0.5rem; }
+    h2 { border-bottom: 1px solid #e1e4e8; padding-bottom: 0.4rem; margin-top: 2.5rem; color: #0366d6; }
+    h3 { margin-top: 2rem; color: #24292e; }
+    h4 { margin-top: 1.5rem; color: #444d56; }
+    table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+    th, td { border: 1px solid #dfe2e5; padding: 0.5rem 0.75rem; text-align: left; }
+    th { background-color: #f6f8fa; font-weight: 600; }
+    tr:nth-child(even) { background-color: #f6f8fa; }
+    code { background-color: #f3f4f6; padding: 0.15em 0.4em; border-radius: 3px; font-size: 0.9em; font-family: "SFMono-Regular", Consolas, monospace; }
+    pre { background-color: #303030; color: #cccccc; padding: 1rem; border-radius: 6px; overflow-x: auto; }
+    pre code { background: none; padding: 0; color: inherit; }
+    blockquote { border-left: 4px solid #0366d6; padding-left: 1rem; margin-left: 0; color: #586069; background: #f1f8ff; padding: 0.75rem 1rem; border-radius: 0 4px 4px 0; }
+    .toc { background: #f6f8fa; border: 1px solid #e1e4e8; border-radius: 6px; padding: 1.25rem 1.5rem; margin-bottom: 2rem; }
+    .toc ul { margin: 0.4rem 0 0 0; padding-left: 1.5rem; }
+    .toc li { margin: 0.25rem 0; }
+    .badge { display: inline-block; padding: 0.2em 0.6em; border-radius: 3px; font-size: 0.8em; font-weight: 600; }
+    .badge-public { background: #dcfce7; color: #15803d; }
+    .badge-auth { background: #fef9c3; color: #854d0e; }
+    .badge-admin { background: #fee2e2; color: #b91c1c; }
+    .annotation-box { background: #fffbeb; border: 1px solid #fcd34d; border-radius: 6px; padding: 0.75rem 1rem; margin: 0.75rem 0; }
+    .flow-step { background: #f0f9ff; border-left: 4px solid #0369a1; padding: 0.6rem 1rem; margin: 0.5rem 0; border-radius: 0 4px 4px 0; }
+    hr { border: none; border-top: 1px solid #e1e4e8; margin: 2rem 0; }
+  </style>
+  <link rel="stylesheet" href="readme-style.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">sb-ecom API Documentation</h1>
+</header>
+
+<h1 id="sb-ecom--spring-boot-e-commerce-rest-api">sb-ecom — Spring Boot E-Commerce REST API</h1>
+<p>A full-featured e-commerce backend built with Spring Boot 4, providing REST APIs for product catalog, shopping cart, order management, and secure user authentication via JWT.</p>
+
+<div class="toc">
+  <strong>Table of Contents</strong>
+  <ul>
+    <li><a href="#tech-stack">Tech Stack</a></li>
+    <li><a href="#spring-security">1. Spring Security</a></li>
+    <li><a href="#spring-boot-architecture">2. Spring Boot Architecture</a></li>
+    <li><a href="#crud-operations">3. CRUD Operations</a></li>
+    <li><a href="#exception-handling">4. Exception Handling</a></li>
+    <li><a href="#models-and-relationships">5. Models and Relationships</a></li>
+    <li><a href="#repositories">6. Repositories</a></li>
+    <li><a href="#payload-and-modelmapper">7. Payload Structure &amp; ModelMapper</a></li>
+    <li><a href="#swagger">8. Swagger / OpenAPI Documentation</a></li>
+    <li><a href="#service-layer">9. Service Layer Logic</a></li>
+    <li><a href="#payment-api">10. Payment API</a></li>
+    <li><a href="#getting-started">Getting Started</a></li>
+    <li><a href="#api-reference">Full API Reference</a></li>
+  </ul>
+</div>
+
+<hr />
+
+<h2 id="tech-stack">Tech Stack</h2>
+<table>
+<thead><tr><th>Layer</th><th>Technology</th></tr></thead>
+<tbody>
+<tr><td>Language</td><td>Java 17</td></tr>
+<tr><td>Framework</td><td>Spring Boot 4.0.1</td></tr>
+<tr><td>ORM</td><td>Spring Data JPA / Hibernate</td></tr>
+<tr><td>Database</td><td>MySQL 8 (AWS RDS-ready)</td></tr>
+<tr><td>Authentication</td><td>JWT (JJWT 0.13.0) via HTTP-only cookie</td></tr>
+<tr><td>Security</td><td>Spring Security 6</td></tr>
+<tr><td>DTO Mapping</td><td>ModelMapper 3.2.4</td></tr>
+<tr><td>API Docs</td><td>SpringDoc OpenAPI 2.8.9 / Swagger UI</td></tr>
+<tr><td>Build</td><td>Maven</td></tr>
+</tbody>
+</table>
+
+<hr />
+
+<h2 id="spring-security">1. Spring Security</h2>
+
+<p>The application uses a stateless JWT-based security model. No server-side session is maintained; every request is authenticated by validating a JWT token extracted from either an HTTP-only cookie or the <code>Authorization: Bearer</code> header.</p>
+
+<h3>1.1 Security Filter Chain (<code>WebSecurityConfig.java</code>)</h3>
+<p>Annotated with <code>@Configuration</code> and <code>@EnableWebSecurity</code>, this class defines the central security policy.</p>
+<pre><code class="language-java">@Configuration
+@EnableWebSecurity
+public class WebSecurityConfig {
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .csrf(csrf -> csrf.disable())
+            .exceptionHandling(ex -> ex.authenticationEntryPoint(authEntryPointJwt))
+            .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
+                .requestMatchers("/images/**").permitAll()
+                .anyRequest().authenticated()
+            );
+
+        http.authenticationProvider(authenticationProvider());
+        http.addFilterBefore(authTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+        return http.build();
+    }
+}</code></pre>
+
+<p>Key configuration decisions:</p>
+<table>
+<thead><tr><th>Setting</th><th>Value</th><th>Reason</th></tr></thead>
+<tbody>
+<tr><td>CSRF</td><td>Disabled</td><td>REST API with stateless JWT — no browser session to protect</td></tr>
+<tr><td>Session Policy</td><td>STATELESS</td><td>JWT tokens replace server-side sessions</td></tr>
+<tr><td>Password Encoder</td><td>BCryptPasswordEncoder</td><td>Adaptive hashing, resistant to brute-force</td></tr>
+<tr><td>Frame Options</td><td>SAME_ORIGIN</td><td>Allows H2 console access in development</td></tr>
+</tbody>
+</table>
+
+<h3>1.2 JWT Utilities (<code>JwtUtils.java</code>)</h3>
+<p>Annotated with <code>@Component</code>. Reads configuration from <code>application.properties</code> via <code>@Value</code>.</p>
+<pre><code class="language-properties">spring.app.jwtSecret=mySecretKey912738sdsdfdfd...
+spring.app.jwtExpirationMs=3000000
+spring.ecom.app.jwtCookieName=springBootEcom</code></pre>
+
+<table>
+<thead><tr><th>Method</th><th>Purpose</th></tr></thead>
+<tbody>
+<tr><td><code>generateJwtCookie(UserDetailsImpl)</code></td><td>Creates HTTP-only cookie containing a signed JWT</td></tr>
+<tr><td><code>getJwtFromCookies(HttpServletRequest)</code></td><td>Extracts JWT string from the named cookie</td></tr>
+<tr><td><code>getJwtFromHeader(HttpServletRequest)</code></td><td>Extracts JWT from <code>Authorization: Bearer {token}</code> header</td></tr>
+<tr><td><code>generateTokenFromUsername(String)</code></td><td>Signs a new JWT with username as subject using HMAC-SHA</td></tr>
+<tr><td><code>getUsernameFromToken(String)</code></td><td>Parses claims and returns the subject (username)</td></tr>
+<tr><td><code>validateJwtToken(String)</code></td><td>Validates signature, format, and expiry; logs specific errors</td></tr>
+<tr><td><code>getCleanJwtCookie()</code></td><td>Returns an empty cookie to clear the JWT on logout</td></tr>
+<tr><td><code>key()</code></td><td>Decodes the Base64 secret and creates an HMAC-SHA signing key</td></tr>
+</tbody>
+</table>
+
+<p><code>validateJwtToken</code> distinguishes between failure modes:</p>
+<pre><code class="language-java">try {
+    Jwts.parserBuilder().setSigningKey(key()).build().parseClaimsJws(authToken);
+    return true;
+} catch (MalformedJwtException e)    { /* invalid token format */ }
+  catch (ExpiredJwtException e)      { /* token has expired    */ }
+  catch (UnsupportedJwtException e)  { /* unsupported token    */ }
+  catch (IllegalArgumentException e) { /* empty claims string  */ }</code></pre>
+
+<h3>1.3 JWT Authentication Filter (<code>AuthTokenFilter.java</code>)</h3>
+<p>Extends <code>OncePerRequestFilter</code> — runs exactly once per request before the rest of the filter chain. Priority: cookies are checked first; the <code>Authorization</code> header is the fallback.</p>
+<pre><code class="language-java">@Override
+protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
+                                FilterChain filterChain) throws ServletException, IOException {
+    String jwt = jwtUtils.getJwtFromCookies(request);
+    if (jwt == null) jwt = jwtUtils.getJwtFromHeader(request);
+
+    if (jwt != null &amp;&amp; jwtUtils.validateJwtToken(jwt)) {
+        String username = jwtUtils.getUsernameFromToken(jwt);
+        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        UsernamePasswordAuthenticationToken auth =
+            new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(auth);
+    }
+    filterChain.doFilter(request, response);
+}</code></pre>
+
+<h3>1.4 Authentication Entry Point (<code>AuthEntryPointJwt.java</code>)</h3>
+<p>Implements <code>AuthenticationEntryPoint</code>. Called automatically by Spring Security when an unauthenticated request hits a protected endpoint. Returns a structured JSON 401 error instead of a redirect.</p>
+<pre><code class="language-json">{
+  "status": 401,
+  "error": "Unauthorized",
+  "message": "Full authentication is required to access this resource",
+  "path": "/api/addresses"
+}</code></pre>
+
+<h3>1.5 User Details (<code>UserDetailsImpl</code> + <code>UserDetailsServiceImpl</code>)</h3>
+<p><code>UserDetailsImpl</code> wraps the <code>User</code> entity to satisfy the Spring Security <code>UserDetails</code> contract. The static factory method <code>build(User user)</code> maps <code>AppRole</code> enum values to <code>SimpleGrantedAuthority</code> instances.</p>
+<pre><code class="language-java">public static UserDetailsImpl build(User user) {
+    List&lt;GrantedAuthority&gt; authorities = user.getRoles().stream()
+        .map(role -> new SimpleGrantedAuthority(role.getRoleName().name()))
+        .collect(Collectors.toList());
+    return new UserDetailsImpl(user.getUserId(), user.getUserName(),
+                               user.getEmail(), user.getPassword(), authorities);
+}</code></pre>
+<p><code>UserDetailsServiceImpl</code> (annotated <code>@Service</code>) implements <code>loadUserByUsername</code> and fetches the <code>User</code> from <code>UserRepository</code>, throwing <code>UsernameNotFoundException</code> if absent.</p>
+
+<h3>1.6 Roles</h3>
+<table>
+<thead><tr><th>Role</th><th>Capabilities</th></tr></thead>
+<tbody>
+<tr><td><code>ROLE_USER</code></td><td>Browse public products, manage own cart, place orders, manage own addresses</td></tr>
+<tr><td><code>ROLE_SELLER</code></td><td>All of USER + add and update own products</td></tr>
+<tr><td><code>ROLE_ADMIN</code></td><td>Full access — category/product management, view all carts and addresses</td></tr>
+</tbody>
+</table>
+
+<hr />
+
+<h2 id="spring-boot-architecture">2. Spring Boot Architecture</h2>
+
+<p>The application follows a classic layered (N-tier) architecture. Each layer has a single responsibility and communicates only with the layer directly beneath it.</p>
+
+<pre><code>┌──────────────────────────────────────────────────┐
+│                  HTTP Client                      │
+└──────────────────────┬───────────────────────────┘
+                       │  JSON over HTTP
+┌──────────────────────▼───────────────────────────┐
+│           Controller Layer (@RestController)      │
+│  Handles HTTP routing, input validation,          │
+│  maps DTOs to/from service calls                  │
+├──────────────────────────────────────────────────┤
+│           Service Layer (@Service)                │
+│  Encapsulates all business logic, transaction     │
+│  management, ModelMapper conversions              │
+├──────────────────────────────────────────────────┤
+│         Repository Layer (JpaRepository)          │
+│  Spring Data JPA — auto-implements CRUD +         │
+│  custom JPQL/native queries                       │
+├──────────────────────────────────────────────────┤
+│           Entity / Model Layer (@Entity)          │
+│  JPA-managed POJOs mapped to MySQL tables         │
+│  Define relationships, constraints, cascades      │
+├──────────────────────────────────────────────────┤
+│           MySQL Database (Hibernate ORM)          │
+└──────────────────────────────────────────────────┘
+
+Cross-cutting concerns
+  ├── Spring Security (authentication + authorization)
+  ├── Global Exception Handler (@RestControllerAdvice)
+  ├── ModelMapper (entity ↔ DTO translation)
+  └── Swagger / OpenAPI (live API documentation)</code></pre>
+
+<h3>Entry Point</h3>
+<pre><code class="language-java">@SpringBootApplication   // = @Configuration + @EnableAutoConfiguration + @ComponentScan
+public class SbEcomApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(SbEcomApplication.class, args);
+    }
+}</code></pre>
+<p><code>@SpringBootApplication</code> triggers auto-configuration for JPA, Security, Web MVC, and Jackson. The <code>AuthController</code> also defines a <code>CommandLineRunner</code> bean that seeds the <code>roles</code> table and default admin/user/seller accounts on first startup.</p>
+
+<h3>Package Layout</h3>
+<pre><code>com.ecommerce.project/
+├── SbEcomApplication.java       ← bootstrap
+├── config/                      ← AppConfig, AppConstants, SwaggerConfig
+├── controller/                  ← REST endpoints (input/output)
+├── service/                     ← business logic (interface + impl pairs)
+├── repositories/                ← Spring Data JPA interfaces
+├── model/                       ← JPA entities
+├── payload/                     ← DTOs (request / response bodies)
+├── security/                    ← JWT, filters, UserDetails
+│   ├── jwt/
+│   ├── services/
+│   ├── request/
+│   └── response/
+├── exceptions/                  ← custom exceptions + global handler
+└── util/                        ← AuthUtil (current-user helper)</code></pre>
+
+<hr />
+
+<h2 id="crud-operations">3. CRUD Operations</h2>
+
+<p>Each resource (Category, Product, Cart, Address, Order) follows the REST CRUD pattern. Controllers delegate to the service layer; they never interact with repositories directly.</p>
+
+<h3>Categories</h3>
+<table>
+<thead><tr><th>HTTP</th><th>Endpoint</th><th>Operation</th><th>Service Method</th></tr></thead>
+<tbody>
+<tr><td>GET</td><td><code>/api/public/categories</code></td><td>Read all (paginated)</td><td><code>getAllCategories(...)</code></td></tr>
+<tr><td>POST</td><td><code>/api/public/categories</code></td><td>Create</td><td><code>createCategory(CategoryDTO)</code></td></tr>
+<tr><td>PUT</td><td><code>/api/public/categories/{id}</code></td><td>Update</td><td><code>updateCategory(CategoryDTO, id)</code></td></tr>
+<tr><td>DELETE</td><td><code>/api/admin/categories/{id}</code></td><td>Delete</td><td><code>deleteCategory(id)</code></td></tr>
+</tbody>
+</table>
+
+<h3>Products</h3>
+<table>
+<thead><tr><th>HTTP</th><th>Endpoint</th><th>Operation</th></tr></thead>
+<tbody>
+<tr><td>POST</td><td><code>/api/admin/categories/{id}/product</code></td><td>Create product under a category</td></tr>
+<tr><td>GET</td><td><code>/api/public/products</code></td><td>Read all (paginated + sorted)</td></tr>
+<tr><td>GET</td><td><code>/api/public/categories/{id}/products</code></td><td>Read by category</td></tr>
+<tr><td>GET</td><td><code>/api/public/products/keyword/{keyword}</code></td><td>Search by name (case-insensitive LIKE)</td></tr>
+<tr><td>PUT</td><td><code>/api/admin/products/{id}</code></td><td>Update product + propagate price to carts</td></tr>
+<tr><td>DELETE</td><td><code>/api/admin/products/{id}</code></td><td>Delete product + remove from all carts</td></tr>
+<tr><td>PUT</td><td><code>/api/products/{id}/image</code></td><td>Upload product image (multipart/form-data)</td></tr>
+</tbody>
+</table>
+
+<h3>Cart</h3>
+<table>
+<thead><tr><th>HTTP</th><th>Endpoint</th><th>Operation</th></tr></thead>
+<tbody>
+<tr><td>POST</td><td><code>/api/carts/products/{productId}/quantity/{quantity}</code></td><td>Add product; creates cart if absent</td></tr>
+<tr><td>GET</td><td><code>/api/carts/users/cart</code></td><td>Read current user's cart</td></tr>
+<tr><td>GET</td><td><code>/api/carts</code></td><td>Read all carts (admin)</td></tr>
+<tr><td>PUT</td><td><code>/api/cart/products/{productId}/quantity/{operation}</code></td><td>Increment or decrement quantity (<code>add</code>/<code>delete</code>)</td></tr>
+<tr><td>DELETE</td><td><code>/api/carts/{cartId}/product/{productId}</code></td><td>Remove product from cart</td></tr>
+</tbody>
+</table>
+
+<h3>Addresses</h3>
+<table>
+<thead><tr><th>HTTP</th><th>Endpoint</th><th>Operation</th></tr></thead>
+<tbody>
+<tr><td>POST</td><td><code>/api/addresses</code></td><td>Create address for current user</td></tr>
+<tr><td>GET</td><td><code>/api/addresses</code></td><td>Read all addresses (admin)</td></tr>
+<tr><td>GET</td><td><code>/api/addresses/{id}</code></td><td>Read address by ID</td></tr>
+<tr><td>GET</td><td><code>/api/users/addresses</code></td><td>Read current user's addresses</td></tr>
+<tr><td>PUT</td><td><code>/api/addresses/{id}</code></td><td>Update address</td></tr>
+<tr><td>DELETE</td><td><code>/api/addresses/{id}</code></td><td>Delete address</td></tr>
+</tbody>
+</table>
+
+<h3>Orders</h3>
+<table>
+<thead><tr><th>HTTP</th><th>Endpoint</th><th>Operation</th></tr></thead>
+<tbody>
+<tr><td>POST</td><td><code>/api/order/users/payments/{paymentMethod}</code></td><td>Place order — converts cart to order, clears cart</td></tr>
+</tbody>
+</table>
+
+<h3>Pagination &amp; Sorting</h3>
+<p>All list endpoints accept these query parameters, with defaults defined in <code>AppConstants.java</code>:</p>
+<pre><code class="language-java">public static final String PAGE_NUMBER   = "0";
+public static final String PAGE_SIZE     = "10";
+public static final String SORT_CATEGORIES_BY = "categoryId";
+public static final String SORT_PRODUCTS_BY   = "productId";
+public static final String SORT_DIR      = "asc";</code></pre>
+<p>The service layer builds the <code>Pageable</code> from these values and populates <code>CategoryResponse</code> / <code>ProductResponse</code> with <code>pageNumber</code>, <code>pageSize</code>, <code>totalElements</code>, <code>totalPages</code>, and <code>lastPage</code>.</p>
+
+<hr />
+
+<h2 id="exception-handling">4. Exception Handling in Spring Boot</h2>
+
+<p>All exceptions are handled centrally in <code>MyGlobalExceptionHandler</code>, annotated with <code>@RestControllerAdvice</code>. This class intercepts exceptions thrown anywhere in the controller or service layers and returns a structured JSON error response — no stack traces leak to the client.</p>
+
+<h3>Custom Exception Classes</h3>
+
+<h4><code>ResourceNotFoundException</code></h4>
+<pre><code class="language-java">public class ResourceNotFoundException extends RuntimeException {
+    String resourceName;
+    String field;
+    String fieldName;
+    Long fieldId;
+
+    public ResourceNotFoundException(String resourceName, String field, Long fieldId) {
+        super(String.format("%s not found with %s : %d", resourceName, field, fieldId));
+        // ...
+    }
+}</code></pre>
+<p>Thrown when a database lookup by ID or name returns no result. For example: category not found, product not found, address not found.</p>
+
+<h4><code>APIException</code></h4>
+<pre><code class="language-java">public class APIException extends RuntimeException {
+    public APIException(String message) { super(message); }
+}</code></pre>
+<p>Used for business-rule violations: duplicate category name, product not in cart, empty cart on checkout, etc.</p>
+
+<h3>Global Exception Handler</h3>
+<pre><code class="language-java">@RestControllerAdvice
+public class MyGlobalExceptionHandler {
+
+    // Validation failures (@Valid on request body fields)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity&lt;Map&lt;String, String&gt;&gt; myMethodArgumentNotValidException(
+            MethodArgumentNotValidException e) {
+        Map&lt;String, String&gt; response = new HashMap&lt;&gt;();
+        e.getBindingResult().getAllErrors().forEach(err -&gt; {
+            String fieldName = ((FieldError) err).getField();
+            String message   = err.getDefaultMessage();
+            response.put(fieldName, message);
+        });
+        return new ResponseEntity&lt;&gt;(response, HttpStatus.BAD_REQUEST);
+    }
+
+    // Entity not found
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity&lt;APIResponse&gt; myResourceNotFoundException(ResourceNotFoundException e) {
+        return new ResponseEntity&lt;&gt;(new APIResponse(e.getMessage(), false), HttpStatus.NOT_FOUND);
+    }
+
+    // Business rule violations
+    @ExceptionHandler(APIException.class)
+    public ResponseEntity&lt;APIResponse&gt; myAPIException(APIException e) {
+        return new ResponseEntity&lt;&gt;(new APIResponse(e.getMessage(), false), HttpStatus.BAD_REQUEST);
+    }
+}</code></pre>
+
+<h3>Error Response Shapes</h3>
+<table>
+<thead><tr><th>Exception</th><th>HTTP Status</th><th>Response Body</th></tr></thead>
+<tbody>
+<tr><td><code>MethodArgumentNotValidException</code></td><td>400 Bad Request</td><td><code>{"fieldName": "validation message", ...}</code></td></tr>
+<tr><td><code>ResourceNotFoundException</code></td><td>404 Not Found</td><td><code>{"message": "...", "status": false}</code></td></tr>
+<tr><td><code>APIException</code></td><td>400 Bad Request</td><td><code>{"message": "...", "status": false}</code></td></tr>
+<tr><td>Unauthenticated request</td><td>401 Unauthorized</td><td>JSON from <code>AuthEntryPointJwt</code></td></tr>
+</tbody>
+</table>
+
+<hr />
+
+<h2 id="models-and-relationships">5. Models and Their Relationships</h2>
+
+<p>All entities are in <code>com.ecommerce.project.model</code>. Hibernate generates and manages the corresponding MySQL tables.</p>
+
+<h3>Entity Relationship Diagram (conceptual)</h3>
+<pre><code>User ──────────────── Role         (ManyToMany  → user_role junction table)
+User ──────────────── Address      (OneToMany   → addresses.user_id)
+User ──────────────── Product      (OneToMany   → products.seller_id)
+User ──────────────── Cart         (OneToOne    → carts.user_id)
+
+Category ──────────── Product      (OneToMany   → products.category_id)
+
+Cart ───────────────── CartItem    (OneToMany   → cart_items.cart_id)
+CartItem ──────────── Product      (ManyToOne   → cart_items.product_id)
+
+Order ──────────────── OrderItem   (OneToMany   → order_items.order_id)
+Order ──────────────── Payment     (OneToOne    → orders.payment_id)
+Order ──────────────── Address     (ManyToOne   → orders.address_id)
+OrderItem ─────────── Product      (ManyToOne   → order_items.product_id)</code></pre>
+
+<h3>User</h3>
+<pre><code class="language-java">@Entity
+@Table(name = "users",
+    uniqueConstraints = {
+        @UniqueConstraint(columnNames = "username"),
+        @UniqueConstraint(columnNames = "email")
+    })
+public class User {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long userId;
+
+    @NotBlank @Size(max = 20)
+    @Column(name = "username")
+    private String userName;
+
+    @NotBlank @Size(max = 50) @Email
+    private String email;
+
+    @NotBlank @Size(max = 120)
+    private String password;
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role",
+        joinColumns        = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set&lt;Role&gt; roles = new HashSet&lt;&gt;();
+
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+               orphanRemoval = true)
+    private List&lt;Address&gt; addresses = new ArrayList&lt;&gt;();
+
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+               orphanRemoval = true)
+    private Set&lt;Product&gt; products = new HashSet&lt;&gt;();
+
+    @OneToOne(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+              orphanRemoval = true)
+    private Cart cart;
+}</code></pre>
+
+<h3>Role</h3>
+<pre><code class="language-java">@Entity
+@Table(name = "roles")
+public class Role {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer roleId;
+
+    @Enumerated(EnumType.STRING)  // stored as "ROLE_USER", not 0/1/2
+    private AppRole roleName;
+}
+
+public enum AppRole { ROLE_USER, ROLE_SELLER, ROLE_ADMIN }</code></pre>
+
+<h3>Category</h3>
+<pre><code class="language-java">@Entity(name = "categories")
+public class Category {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long categoryId;
+
+    @NotBlank @Size(min = 5)
+    private String categoryName;
+
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    private List&lt;Product&gt; products;
+}</code></pre>
+
+<h3>Product</h3>
+<pre><code class="language-java">@Entity
+@Table(name = "products")
+public class Product {
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long productId;
+
+    @NotBlank @Size(min = 3)   private String productName;
+    private String image;
+    @NotBlank @Size(min = 6)   private String description;
+    private Integer quantity;
+    private double price;
+    private double discount;
+    private double specialPrice;   // computed: price - (discount% * price)
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    @ManyToOne
+    @JoinColumn(name = "seller_id")
+    private User user;             // the seller who listed this product
+
+    @OneToMany(mappedBy = "product",
+               cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+               fetch = FetchType.EAGER)
+    private List&lt;CartItem&gt; products;  // cart items referencing this product
+}</code></pre>
+
+<h3>Cart and CartItem</h3>
+<pre><code class="language-java">@Entity @Table(name = "carts")
+public class Cart {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long cartId;
+
+    @OneToOne @JoinColumn(name = "user_id")
+    private User user;
+
+    @OneToMany(mappedBy = "cart",
+               cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE},
+               orphanRemoval = true)
+    private List&lt;CartItem&gt; cartItems = new ArrayList&lt;&gt;();
+
+    private Double totalPrice = 0.0;
+}
+
+@Entity @Table(name = "cart_items")
+public class CartItem {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long cartItemId;
+
+    @ManyToOne @JoinColumn(name = "cart_id")    private Cart cart;
+    @ManyToOne @JoinColumn(name = "product_id") private Product product;
+
+    private Integer quantity;
+    private Double discount;
+    private Double productPrice;
+}</code></pre>
+
+<h3>Order, OrderItem, and Payment</h3>
+<pre><code class="language-java">@Entity @Table(name = "orders")
+public class Order {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long orderId;
+
+    @Email @Column(nullable = false)
+    private String email;
+
+    @OneToMany(mappedBy = "order", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List&lt;OrderItem&gt; orderItems = new ArrayList&lt;&gt;();
+
+    private LocalDate orderDate;
+
+    @OneToOne @JoinColumn(name = "payment_id")
+    private Payment payment;
+
+    @ManyToOne @JoinColumn(name = "address_id")
+    private Address address;
+
+    private Double totalAmount;
+    private String orderStatus;
+}
+
+@Entity @Table(name = "order_items")
+public class OrderItem {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long orderItemId;
+
+    @ManyToOne @JoinColumn(name = "product_id") private Product product;
+    @ManyToOne @JoinColumn(name = "order_id")   private Order order;
+
+    private Integer quantity;
+    private Double discount;
+    private Double orderedProductprice;
+}
+
+@Entity @Table(name = "payments")
+public class Payment {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long paymentId;
+
+    @OneToOne(mappedBy = "payment", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Order order;
+
+    @NotBlank @Size(min = 4) private String paymentMethod;
+    private String pgName;
+    private String pgPaymentId;
+    private String pgStatus;
+    private String pgResponseMessage;
+}</code></pre>
+
+<h3>Address</h3>
+<pre><code class="language-java">@Entity @Table(name = "addresses")
+public class Address {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long addressId;
+
+    @NotBlank @Size(min = 5) private String street;
+    @NotBlank @Size(min = 5) private String buildingName;
+    @NotBlank @Size(min = 4) private String city;
+    @NotBlank @Size(min = 2) private String state;
+    @NotBlank @Size(min = 3) private String country;
+    @NotBlank @Size(min = 5) private String pincode;
+
+    @ManyToOne @JoinColumn(name = "user_id")
+    private User user;
+}</code></pre>
+
+<hr />
+
+<h2 id="repositories">6. Repositories</h2>
+
+<p>All repositories extend <code>JpaRepository&lt;Entity, ID&gt;</code>, which automatically provides: <code>save</code>, <code>findById</code>, <code>findAll</code>, <code>deleteById</code>, <code>count</code>, and <code>existsById</code>. Custom query methods are added only where the derived query syntax or JPQL is needed.</p>
+
+<h3>UserRepository</h3>
+<pre><code class="language-java">public interface UserRepository extends JpaRepository&lt;User, Long&gt; {
+    Optional&lt;User&gt; findByUserName(String userName);   // login lookup
+    boolean existsByUserName(String userName);         // duplicate-check on signup
+    boolean existsByEmail(String email);              // duplicate-check on signup
+}</code></pre>
+
+<h3>RoleRepository</h3>
+<pre><code class="language-java">public interface RoleRepository extends JpaRepository&lt;Role, Integer&gt; {
+    Optional&lt;Role&gt; findByRoleName(AppRole appRole);   // role seed lookup
+}</code></pre>
+
+<h3>CategoryRepository</h3>
+<pre><code class="language-java">public interface CategoryRepository extends JpaRepository&lt;Category, Long&gt; {
+    Category findByCategoryName(String categoryName); // duplicate-name guard
+}</code></pre>
+
+<h3>ProductRepository</h3>
+<pre><code class="language-java">public interface ProductRepository extends JpaRepository&lt;Product, Long&gt; {
+    // Products in a category sorted cheapest-first
+    Page&lt;Product&gt; findByCategoryOrderByPriceAsc(Category category, Pageable pageDetails);
+
+    // Case-insensitive keyword search (SQL LIKE %keyword%)
+    Page&lt;Product&gt; findByProductNameLikeIgnoreCase(String keyword, Pageable pageDetails);
+}</code></pre>
+
+<h3>CartRepository</h3>
+<pre><code class="language-java">public interface CartRepository extends JpaRepository&lt;Cart, Long&gt; {
+
+    // Find the cart owned by an email address
+    @Query("SELECT c FROM Cart c WHERE c.user.email = ?1")
+    Cart findCartByEmail(String email);
+
+    // Used during checkout to verify ownership
+    @Query("SELECT c FROM Cart c WHERE c.user.email = ?1 AND c.cartId = ?2")
+    Cart findCartByEmailAndCartId(String email, Long cartId);
+
+    // Eager-load carts that contain a specific product (used before product deletion)
+    @Query("SELECT c FROM Cart c JOIN FETCH c.cartItems ci " +
+           "JOIN FETCH ci.product p WHERE p.productId = ?1")
+    List&lt;Cart&gt; findCartsByProductId(Long productId);
+}</code></pre>
+
+<h3>CartItemRepository</h3>
+<pre><code class="language-java">public interface CartItemRepository extends JpaRepository&lt;CartItem, Long&gt; {
+
+    // Find a specific item in a specific cart
+    @Query("SELECT ci FROM CartItem ci " +
+           "WHERE ci.cart.cartId = ?1 AND ci.product.productId = ?2")
+    CartItem findCartItemByProductIdAndCartId(Long cartId, Long productId);
+
+    // Bulk delete (used when removing a product from a cart)
+    @Modifying
+    @Query("DELETE FROM CartItem ci " +
+           "WHERE ci.product.productId = ?1 AND ci.cart.cartId = ?2")
+    void deleteCartItemByProductIdAndCartId(Long productId, Long cartId);
+}</code></pre>
+<p><code>@Modifying</code> is required on any JPQL DML statement (UPDATE / DELETE) so Hibernate flushes the persistence context and executes the statement immediately.</p>
+
+<h3>Other Repositories</h3>
+<table>
+<thead><tr><th>Repository</th><th>Entity</th><th>Custom Queries</th></tr></thead>
+<tbody>
+<tr><td><code>AddressRepository</code></td><td>Address</td><td>None — CRUD inherited from JpaRepository</td></tr>
+<tr><td><code>OrderRepository</code></td><td>Order</td><td>None</td></tr>
+<tr><td><code>OrderItemRepository</code></td><td>OrderItem</td><td>None</td></tr>
+<tr><td><code>PaymentRepository</code></td><td>Payment</td><td>None</td></tr>
+</tbody>
+</table>
+
+<hr />
+
+<h2 id="payload-and-modelmapper">7. Payload Structure &amp; ModelMapper</h2>
+
+<p>DTOs (Data Transfer Objects) live in <code>com.ecommerce.project.payload</code>. They decouple the API contract from the database schema — entities are never serialized directly to JSON.</p>
+
+<h3>ModelMapper Configuration</h3>
+<pre><code class="language-java">// AppConfig.java
+@Configuration
+public class AppConfig {
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
+}
+
+// Usage in a service
+CategoryDTO categoryDTO = modelMapper.map(category, CategoryDTO.class);
+Category category       = modelMapper.map(categoryDTO, Category.class);</code></pre>
+<p>ModelMapper uses reflection to copy fields with matching names. When field names diverge between entity and DTO, explicit property mapping or a custom converter is used.</p>
+
+<h3>DTO Reference</h3>
+
+<h4>CategoryDTO / CategoryResponse</h4>
+<pre><code class="language-java">public class CategoryDTO {
+    private Long categoryId;
+    @Schema(description = "Name of the category", example = "Electronics")
+    private String categoryName;
+}
+
+public class CategoryResponse {
+    private List&lt;CategoryDTO&gt; content;
+    private Integer pageNumber;
+    private Integer pageSize;
+    private Long totalElements;
+    private Integer totalPages;
+    private boolean lastPage;
+}</code></pre>
+
+<h4>ProductDTO / ProductResponse</h4>
+<pre><code class="language-java">public class ProductDTO {
+    private Long productId;
+    private String productName;
+    private String image;
+    private String description;
+    private Integer quantity;
+    private Double price;
+    private Double discount;
+    private Double specialPrice;  // price - (discount% * price)
+}
+
+public class ProductResponse {
+    private List&lt;ProductDTO&gt; content;
+    private Integer pageNumber;
+    private Integer pageSize;
+    private Long totalElements;
+    private Integer totalPages;
+    private boolean lastPage;
+}</code></pre>
+
+<h4>CartDTO / CartItemDTO</h4>
+<pre><code class="language-java">public class CartDTO {
+    private Long cartId;
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    private Double totalPrice;
+    private List&lt;ProductDTO&gt; products;  // flattened product list for the client
+}
+
+public class CartItemDTO {
+    private Long cartItemId;
+    private CartDTO cart;
+    private ProductDTO productDTO;
+    private Integer quantity;
+    private Double discount;
+    private Double productPrice;
+}</code></pre>
+
+<h4>AddressDTO</h4>
+<pre><code class="language-json">{
+  "addressId": 1,
+  "street": "123 Main St",
+  "buildingName": "Apt 4B",
+  "city": "Springfield",
+  "state": "IL",
+  "country": "USA",
+  "pincode": "62701"
+}</code></pre>
+
+<h4>OrderRequestDTO (Checkout Input)</h4>
+<pre><code class="language-json">{
+  "addressId": 1,
+  "paymentMethod": "CARD",
+  "pgName": "Stripe",
+  "pgPaymentId": "pi_abc123",
+  "pgStatus": "SUCCESS",
+  "pgResponseMessage": "Payment processed"
+}</code></pre>
+
+<h4>OrderDTO / OrderItemDTO (Checkout Response)</h4>
+<pre><code class="language-json">{
+  "orderId": 42,
+  "email": "user@example.com",
+  "orderDate": "2026-07-15",
+  "totalAmount": 89.97,
+  "orderStatus": "Order Accepted!",
+  "addressId": 1,
+  "payment": {
+    "paymentId": 10,
+    "paymentMethod": "CARD",
+    "pgName": "Stripe",
+    "pgPaymentId": "pi_abc123",
+    "pgStatus": "SUCCESS",
+    "pgResponseMessage": "Payment processed"
+  },
+  "orderItems": [
+    {
+      "orderItemId": 101,
+      "quantity": 3,
+      "discount": 10.0,
+      "orderedProductPrice": 29.99,
+      "product": { "productId": 5, "productName": "Wireless Mouse", ... }
+    }
+  ]
+}</code></pre>
+
+<h4>APIResponse (Generic status wrapper)</h4>
+<pre><code class="language-java">public class APIResponse {
+    private String message;
+    private boolean status;
+}</code></pre>
+
+<hr />
+
+<h2 id="swagger">8. Swagger / OpenAPI Documentation</h2>
+
+<p>SpringDoc OpenAPI 2.8.9 auto-generates an OpenAPI 3.0 specification from annotations on controllers and DTOs. Swagger UI provides a live interactive console.</p>
+
+<h3>SwaggerConfig.java</h3>
+<pre><code class="language-java">@Configuration
+public class SwaggerConfig {
+
+    @Bean
+    public OpenAPI customOpenAPI() {
+        return new OpenAPI()
+            .info(new Info()
+                .title("Spring Boot Ecommerce API")
+                .version("1.0")
+                .description("Comprehensive ecommerce REST API with Spring Security and JWT")
+                .contact(new Contact().name("Amitava Spring").email("testSpring@mailg.com"))
+                .license(new License().name("Apache 2.0")))
+            .addSecurityItem(new SecurityRequirement().addList("Bearer Authentication"))
+            .components(new Components()
+                .addSecuritySchemes("Bearer Authentication",
+                    new SecurityScheme()
+                        .type(SecurityScheme.Type.HTTP)
+                        .scheme("bearer")
+                        .bearerFormat("JWT")));
+    }
+}</code></pre>
+
+<h3>Permitted Swagger Endpoints (no auth required)</h3>
+<pre><code>/swagger-ui/index.html      ← interactive UI
+/v3/api-docs                ← raw OpenAPI JSON
+/v3/api-docs/**             ← spec fragments</code></pre>
+
+<h3>Annotations Used on Controllers and DTOs</h3>
+<table>
+<thead><tr><th>Annotation</th><th>Location</th><th>Purpose</th></tr></thead>
+<tbody>
+<tr><td><code>@Tag(name, description)</code></td><td>Controller class</td><td>Groups endpoints in Swagger UI</td></tr>
+<tr><td><code>@Operation(summary)</code></td><td>Controller method</td><td>Short description of an endpoint</td></tr>
+<tr><td><code>@ApiResponses / @ApiResponse</code></td><td>Controller method</td><td>Documents possible HTTP status codes</td></tr>
+<tr><td><code>@Parameter(description)</code></td><td>Method parameter</td><td>Documents path/query params</td></tr>
+<tr><td><code>@Schema(description, example)</code></td><td>DTO field</td><td>Documents field-level metadata</td></tr>
+</tbody>
+</table>
+
+<h3>Security in Swagger UI</h3>
+<p>The security scheme is configured as HTTP Bearer. In Swagger UI, click <strong>Authorize</strong>, paste your JWT token, and all subsequent requests will include <code>Authorization: Bearer &lt;token&gt;</code>.</p>
+
+<hr />
+
+<h2 id="service-layer">9. Service Layer Logic</h2>
+
+<p>Each feature area has an interface and an <code>@Service</code>-annotated implementation class. Services own all business logic, validation, and ModelMapper conversions; controllers are kept thin.</p>
+
+<h3>CategoryServiceImpl</h3>
+<table>
+<thead><tr><th>Method</th><th>Logic</th></tr></thead>
+<tbody>
+<tr><td><code>getAllCategories</code></td><td>Builds <code>PageRequest</code> from parameters, queries repository, maps to <code>CategoryResponse</code>. Throws <code>APIException</code> if no categories exist.</td></tr>
+<tr><td><code>createCategory</code></td><td>Checks for duplicate name via <code>findByCategoryName</code>; throws <code>APIException</code> if found. Saves and returns DTO.</td></tr>
+<tr><td><code>updateCategory</code></td><td>Looks up existing category; throws <code>ResourceNotFoundException</code> if absent. Updates fields, saves, returns DTO.</td></tr>
+<tr><td><code>deleteCategory</code></td><td>Looks up category; throws <code>ResourceNotFoundException</code> if absent. Deletes (cascades to products via <code>CascadeType.ALL</code>).</td></tr>
+</tbody>
+</table>
+
+<h3>ProductServiceImpl</h3>
+<table>
+<thead><tr><th>Method</th><th>Logic</th></tr></thead>
+<tbody>
+<tr><td><code>addProduct</code></td><td>Finds category; computes <code>specialPrice = price - (discount * 0.01 * price)</code>; saves product linked to category and the logged-in seller.</td></tr>
+<tr><td><code>getAllProducts</code></td><td>Paginated, sorted query on all products. Returns <code>ProductResponse</code>.</td></tr>
+<tr><td><code>searchByCategory</code></td><td>Calls <code>findByCategoryOrderByPriceAsc</code> for price-ascending within a category.</td></tr>
+<tr><td><code>searchProductByKeyword</code></td><td>Wraps keyword as <code>%keyword%</code> and calls <code>findByProductNameLikeIgnoreCase</code>.</td></tr>
+<tr><td><code>updateProduct</code></td><td>Finds product; recalculates <code>specialPrice</code>; saves. Then calls <code>updateProductInCarts</code> for every cart containing this product so cart item prices stay current.</td></tr>
+<tr><td><code>deleteProduct</code></td><td>Finds all carts containing the product via <code>CartRepository.findCartsByProductId</code>; removes the cart item from each; then deletes the product.</td></tr>
+<tr><td><code>updateProductImage</code></td><td>Delegates file storage to <code>FileServiceImpl</code>; updates the product's <code>image</code> field with the returned filename.</td></tr>
+</tbody>
+</table>
+
+<h3>CartServiceImpl</h3>
+<table>
+<thead><tr><th>Method</th><th>Logic</th></tr></thead>
+<tbody>
+<tr><td><code>addProductToCart</code></td><td>Retrieves or creates the user's cart (<code>createCart()</code> private helper). Validates: product exists, quantity ≤ stock, product not already in cart. Creates <code>CartItem</code>, updates <code>totalPrice</code>.</td></tr>
+<tr><td><code>updateProductQuantityInCart</code></td><td>Annotated <code>@Transactional</code>. Finds existing <code>CartItem</code>; adjusts quantity by the delta; recalculates total. If new quantity ≤ 0 the item is deleted.</td></tr>
+<tr><td><code>deleteProductFromCart</code></td><td>Finds cart item; calls <code>CartItemRepository.deleteCartItemByProductIdAndCartId</code>; recalculates total.</td></tr>
+<tr><td><code>updateProductInCarts</code></td><td>Called by <code>ProductServiceImpl</code> after a product update; refreshes price and discount on every cart item referencing the product.</td></tr>
+<tr><td><code>getAllCarts</code></td><td>Fetches all carts, converts to DTOs including nested product lists.</td></tr>
+<tr><td><code>getCart</code></td><td>Looks up cart by email and cartId; validates ownership; returns <code>CartDTO</code>.</td></tr>
+</tbody>
+</table>
+
+<h3>AddressServiceImpl</h3>
+<table>
+<thead><tr><th>Method</th><th>Logic</th></tr></thead>
+<tbody>
+<tr><td><code>createAddress</code></td><td>Maps DTO to entity; associates with current user; saves; updates user's address list.</td></tr>
+<tr><td><code>getAddresses</code></td><td>Returns all addresses as DTOs (admin view).</td></tr>
+<tr><td><code>getAddressById</code></td><td>Throws <code>ResourceNotFoundException</code> if not found.</td></tr>
+<tr><td><code>getUserAddresses</code></td><td>Returns only addresses linked to the supplied <code>User</code> object.</td></tr>
+<tr><td><code>updateAddress</code></td><td>Finds address; updates all fields from DTO; saves.</td></tr>
+<tr><td><code>deleteAddress</code></td><td>Removes address from user's list; deletes entity; returns confirmation message.</td></tr>
+</tbody>
+</table>
+
+<h3>OrderServiceImpl</h3>
+<p>The most complex service — placing an order is a multi-step transactional operation.</p>
+<div class="flow-step">Step 1 — Find user's cart; throw <code>APIException</code> if empty.</div>
+<div class="flow-step">Step 2 — Validate the shipping address exists.</div>
+<div class="flow-step">Step 3 — Create a <code>Payment</code> entity with the payment gateway details.</div>
+<div class="flow-step">Step 4 — Create an <code>Order</code> entity: email, date, address, payment, status = "Order Accepted!"</div>
+<div class="flow-step">Step 5 — For each <code>CartItem</code>: validate stock, create an <code>OrderItem</code>, decrement product quantity, save.</div>
+<div class="flow-step">Step 6 — Clear the cart: delete all cart items, reset <code>totalPrice</code> to 0.</div>
+<div class="flow-step">Step 7 — Map <code>Order</code> to <code>OrderDTO</code> and return.</div>
+
+<p>The entire method is annotated <code>@Transactional</code> so any failure rolls back all database writes atomically.</p>
+
+<h3>FileServiceImpl</h3>
+<pre><code class="language-java">public String uploadImage(String path, MultipartFile file) throws IOException {
+    String originalFileName = file.getOriginalFilename();
+    String randomId         = UUID.randomUUID().toString();
+    String fileName         = randomId.concat(originalFileName.substring(originalFileName.lastIndexOf('.')));
+    String filePath         = path + File.separator + fileName;
+
+    File folder = new File(path);
+    if (!folder.exists()) folder.mkdir();
+
+    Files.copy(file.getInputStream(), Paths.get(filePath));
+    return fileName;
+}</code></pre>
+<p>The UUID prefix prevents filename collisions. The filename (not the full path) is stored in the <code>Product.image</code> column and served under <code>/images/**</code>.</p>
+
+<h3>AuthUtil</h3>
+<pre><code class="language-java">@Component
+public class AuthUtil {
+    public String loggedInEmail() { /* extracts email from SecurityContext */ }
+    public Long loggedInUserId()  { /* extracts userId from SecurityContext */ }
+    public User loggedInUser()    { /* loads full User entity from SecurityContext */ }
+}</code></pre>
+<p>Services call <code>AuthUtil</code> rather than accessing <code>SecurityContextHolder</code> directly, keeping authentication logic in one place.</p>
+
+<hr />
+
+<h2 id="payment-api">10. Payment API</h2>
+
+<p>Payment is handled at the order-placement stage. The API is designed to be gateway-agnostic: the client (frontend or mobile app) communicates with a payment gateway (Stripe, Razorpay, etc.) directly, then sends the resulting transaction metadata to the backend for order finalization.</p>
+
+<h3>Endpoint</h3>
+<pre><code>POST /api/order/users/payments/{paymentMethod}</code></pre>
+<p>The <code>{paymentMethod}</code> path variable (e.g., <code>CARD</code>, <code>UPI</code>, <code>NET_BANKING</code>) is stored on the <code>Payment</code> entity as a free-form string alongside the gateway-specific fields.</p>
+
+<h3>OrderRequestDTO (Request Body)</h3>
+<pre><code class="language-java">public class OrderRequestDTO {
+    private Long   addressId;          // saved address to ship to
+    private String paymentMethod;      // CARD, UPI, etc.
+    private String pgName;             // gateway name: Stripe, Razorpay, PayPal
+    private String pgPaymentId;        // gateway transaction/payment intent ID
+    private String pgStatus;           // gateway status: SUCCESS, FAILED, PENDING
+    private String pgResponseMessage;  // human-readable gateway message
+}</code></pre>
+
+<h3>Payment Entity Fields</h3>
+<table>
+<thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td><code>paymentId</code></td><td>Long (PK)</td><td>Auto-generated primary key</td></tr>
+<tr><td><code>paymentMethod</code></td><td>String</td><td>CARD / UPI / NET_BANKING etc.</td></tr>
+<tr><td><code>pgName</code></td><td>String</td><td>Payment gateway name (Stripe, Razorpay)</td></tr>
+<tr><td><code>pgPaymentId</code></td><td>String</td><td>Gateway's transaction/payment intent ID</td></tr>
+<tr><td><code>pgStatus</code></td><td>String</td><td>SUCCESS / FAILED / PENDING from gateway</td></tr>
+<tr><td><code>pgResponseMessage</code></td><td>String</td><td>Gateway's human-readable status message</td></tr>
+</tbody>
+</table>
+
+<h3>Payment Flow</h3>
+<pre><code>Client                 Payment Gateway           Backend (sb-ecom)
+  │                          │                          │
+  ├─── initiate payment ────▶│                          │
+  │◀── payment intent/id ───┤                          │
+  │                          │                          │
+  ├─── confirm payment ─────▶│                          │
+  │◀── pgPaymentId,status ──┤                          │
+  │                          │                          │
+  ├─── POST /api/order/users/payments/CARD ────────────▶│
+  │    { addressId, pgName, pgPaymentId,                │
+  │      pgStatus, pgResponseMessage }                  │
+  │                          │           ┌──────────────┤
+  │                          │           │ Create Payment│
+  │                          │           │ Create Order  │
+  │                          │           │ Create Items  │
+  │                          │           │ Clear Cart    │
+  │                          │           └──────────────┤
+  │◀─────────────────────────────────── OrderDTO ───────┤</code></pre>
+
+<h3>Payment-Order Relationship</h3>
+<pre><code class="language-java">// Payment owns the relationship definition
+@Entity
+public class Payment {
+    @OneToOne(mappedBy = "payment", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Order order;
+}
+
+// Order holds the foreign key column
+@Entity
+public class Order {
+    @OneToOne
+    @JoinColumn(name = "payment_id")
+    private Payment payment;
+}</code></pre>
+
+<h3>OrderService — Payment creation excerpt</h3>
+<pre><code class="language-java">Payment payment = new Payment(paymentMethod, pgPaymentId, pgStatus, pgResponseMessage, pgName);
+payment = paymentRepository.save(payment);
+
+Order order = new Order();
+order.setEmail(emailId);
+order.setOrderDate(LocalDate.now());
+order.setTotalAmount(cart.getTotalPrice());
+order.setOrderStatus("Order Accepted!");
+order.setAddress(address);
+order.setPayment(payment);</code></pre>
+
+<hr />
+
+<h2 id="getting-started">Getting Started</h2>
+
+<h3>Prerequisites</h3>
+<ul>
+  <li>Java 17+</li>
+  <li>Maven 3.8+</li>
+  <li>MySQL 8 (local or AWS RDS)</li>
+</ul>
+
+<h3>Configuration</h3>
+<p>Edit <code>src/main/resources/application.properties</code>:</p>
+<pre class="properties"><code>spring.datasource.url=jdbc:mysql://localhost:3306/ecommerce
+spring.datasource.username=root
+spring.datasource.password=your_password
+spring.jpa.hibernate.ddl-auto=update
+
+spring.app.jwtSecret=your_jwt_secret_min_32_chars
+spring.app.jwtExpirationMs=3000000
+spring.ecom.app.jwtCookieName=springBootEcom
+
+project.image=images/</code></pre>
+
+<h3>Run</h3>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">mvn spring-boot:run</code></pre></div>
+<p>API starts at <code>http://localhost:8080</code>. On first run, default roles (<code>ROLE_USER</code>, <code>ROLE_SELLER</code>, <code>ROLE_ADMIN</code>) and seed accounts are created by the <code>CommandLineRunner</code> bean in <code>AuthController</code>.</p>
+
+<h3>Swagger UI</h3>
+<pre><code>http://localhost:8080/swagger-ui/index.html</code></pre>
+
+<hr />
+
+<h2 id="api-reference">Full API Reference</h2>
+
+<blockquote>
+Authentication uses JWT stored in an HTTP-only cookie named <code>springBootEcom</code>.<br />
+Endpoints under <code>/api/admin/**</code> require <code>ROLE_ADMIN</code>. All others require a valid JWT unless marked Public.
+</blockquote>
+
+<h3>Auth — <code>/api/auth</code></h3>
+<table>
+<thead><tr><th>Method</th><th>Path</th><th>Auth</th><th>Body</th><th>Response</th></tr></thead>
+<tbody>
+<tr><td>POST</td><td><code>/api/auth/signup</code></td><td>Public</td><td><code>SignupRequest</code></td><td><code>MessageResponse</code></td></tr>
+<tr><td>POST</td><td><code>/api/auth/signin</code></td><td>Public</td><td><code>LoginRequest</code></td><td><code>UserInfoResponse</code> + sets JWT cookie</td></tr>
+<tr><td>POST</td><td><code>/api/auth/signout</code></td><td>Required</td><td>—</td><td><code>MessageResponse</code> + clears cookie</td></tr>
+<tr><td>GET</td><td><code>/api/auth/username</code></td><td>Required</td><td>—</td><td><code>String</code></td></tr>
+<tr><td>GET</td><td><code>/api/auth/user</code></td><td>Required</td><td>—</td><td><code>UserInfoResponse</code></td></tr>
+</tbody>
+</table>
+
+<p><strong>SignupRequest</strong></p>
+<div class="sourceCode"><pre class="sourceCode json"><code class="sourceCode json">{
+  "username": "john",
+  "email": "john@example.com",
+  "password": "secret123",
+  "role": ["user"]
+}</code></pre></div>
+
+<p><strong>LoginRequest</strong></p>
+<div class="sourceCode"><pre class="sourceCode json"><code class="sourceCode json">{
+  "username": "john",
+  "password": "secret123"
+}</code></pre></div>
+
+<h3>Categories — <code>/api</code></h3>
+<table>
+<thead><tr><th>Method</th><th>Path</th><th>Auth</th><th>Body</th><th>Response</th></tr></thead>
+<tbody>
+<tr><td>GET</td><td><code>/api/public/categories</code></td><td>Public</td><td>—</td><td><code>CategoryResponse</code> (paginated)</td></tr>
+<tr><td>POST</td><td><code>/api/public/categories</code></td><td>Required</td><td><code>CategoryDTO</code></td><td><code>CategoryDTO</code></td></tr>
+<tr><td>PUT</td><td><code>/api/public/categories/{categoryId}</code></td><td>Required</td><td><code>CategoryDTO</code></td><td><code>CategoryDTO</code></td></tr>
+<tr><td>DELETE</td><td><code>/api/admin/categories/{categoryId}</code></td><td>Admin</td><td>—</td><td><code>CategoryDTO</code></td></tr>
+</tbody>
+</table>
+
+<p><strong>Query params (GET):</strong> <code>pageNumber</code>, <code>pageSize</code>, <code>sortBy</code>, <code>sortOrder</code><br />
+<strong>Defaults:</strong> page 0, size 10, sorted by <code>categoryId</code> ascending</p>
+
+<h3>Products — <code>/api</code></h3>
+<table>
+<thead><tr><th>Method</th><th>Path</th><th>Auth</th><th>Body</th><th>Response</th></tr></thead>
+<tbody>
+<tr><td>GET</td><td><code>/api/public/products</code></td><td>Public</td><td>—</td><td><code>ProductResponse</code> (paginated)</td></tr>
+<tr><td>GET</td><td><code>/api/public/categories/{categoryId}/products</code></td><td>Public</td><td>—</td><td><code>ProductResponse</code></td></tr>
+<tr><td>GET</td><td><code>/api/public/products/keyword/{keyword}</code></td><td>Public</td><td>—</td><td><code>ProductResponse</code></td></tr>
+<tr><td>POST</td><td><code>/api/admin/categories/{categoryId}/product</code></td><td>Admin</td><td><code>ProductDTO</code></td><td><code>ProductDTO</code></td></tr>
+<tr><td>PUT</td><td><code>/api/admin/products/{productId}</code></td><td>Admin</td><td><code>ProductDTO</code></td><td><code>ProductDTO</code></td></tr>
+<tr><td>DELETE</td><td><code>/api/admin/products/{productId}</code></td><td>Admin</td><td>—</td><td><code>ProductDTO</code></td></tr>
+<tr><td>PUT</td><td><code>/api/products/{productId}/image</code></td><td>Required</td><td>multipart/form-data (field: <code>image</code>)</td><td><code>ProductDTO</code></td></tr>
+</tbody>
+</table>
+
+<p><strong>ProductDTO request body</strong></p>
+<div class="sourceCode"><pre class="sourceCode json"><code class="sourceCode json">{
+  "productName": "Wireless Mouse",
+  "description": "Ergonomic wireless mouse",
+  "quantity": 100,
+  "price": 29.99,
+  "discount": 10.0
+}</code></pre></div>
+
+<h3>Cart — <code>/api</code></h3>
+<table>
+<thead><tr><th>Method</th><th>Path</th><th>Auth</th><th>Response</th></tr></thead>
+<tbody>
+<tr><td>POST</td><td><code>/api/carts/products/{productId}/quantity/{quantity}</code></td><td>Required</td><td><code>CartDTO</code></td></tr>
+<tr><td>GET</td><td><code>/api/carts/users/cart</code></td><td>Required</td><td><code>CartDTO</code></td></tr>
+<tr><td>GET</td><td><code>/api/carts</code></td><td>Admin</td><td><code>List&lt;CartDTO&gt;</code></td></tr>
+<tr><td>PUT</td><td><code>/api/cart/products/{productId}/quantity/{operation}</code></td><td>Required</td><td><code>CartDTO</code></td></tr>
+<tr><td>DELETE</td><td><code>/api/carts/{cartId}/product/{productId}</code></td><td>Required</td><td><code>String</code></td></tr>
+</tbody>
+</table>
+<p><code>{operation}</code> is either <code>add</code> (increment by 1) or <code>delete</code> (decrement by 1).</p>
+
+<h3>Orders — <code>/api</code></h3>
+<table>
+<thead><tr><th>Method</th><th>Path</th><th>Auth</th><th>Body</th><th>Response</th></tr></thead>
+<tbody>
+<tr><td>POST</td><td><code>/api/order/users/payments/{paymentMethod}</code></td><td>Required</td><td><code>OrderRequestDTO</code></td><td><code>OrderDTO</code></td></tr>
+</tbody>
+</table>
+
+<h3>Addresses — <code>/api</code></h3>
+<table>
+<thead><tr><th>Method</th><th>Path</th><th>Auth</th><th>Body</th><th>Response</th></tr></thead>
+<tbody>
+<tr><td>POST</td><td><code>/api/addresses</code></td><td>Required</td><td><code>AddressDTO</code></td><td><code>AddressDTO</code></td></tr>
+<tr><td>GET</td><td><code>/api/addresses</code></td><td>Admin</td><td>—</td><td><code>List&lt;AddressDTO&gt;</code></td></tr>
+<tr><td>GET</td><td><code>/api/addresses/{addressId}</code></td><td>Required</td><td>—</td><td><code>AddressDTO</code></td></tr>
+<tr><td>GET</td><td><code>/api/users/addresses</code></td><td>Required</td><td>—</td><td><code>List&lt;AddressDTO&gt;</code></td></tr>
+<tr><td>PUT</td><td><code>/api/addresses/{addressId}</code></td><td>Required</td><td><code>AddressDTO</code></td><td><code>AddressDTO</code></td></tr>
+<tr><td>DELETE</td><td><code>/api/addresses/{addressId}</code></td><td>Required</td><td>—</td><td><code>String</code></td></tr>
+</tbody>
+</table>
+
+<hr />
+
+<h2>Pagination Response Format</h2>
+<p>All paginated list endpoints return:</p>
+<div class="sourceCode"><pre class="sourceCode json"><code class="sourceCode json">{
+  "content": [...],
+  "pageNumber": 0,
+  "pageSize": 10,
+  "totalElements": 42,
+  "totalPages": 5,
+  "lastPage": false
+}</code></pre></div>
+
+<hr />
+
+<h2>AWS Deployment Notes</h2>
+<p>The <code>application.properties</code> includes commented-out AWS RDS and Elastic Beanstalk configuration:</p>
+<pre class="properties"><code># AWS RDS
+spring.datasource.url=jdbc:mysql://&lt;rds-endpoint&gt;:3306/mysqlecomdb
+spring.datasource.username=ecomdb
+spring.datasource.password=your_rds_password
+
+# Elastic Beanstalk port
+server.port=5000</code></pre>
+
+</body>
+</html>
