@@ -107,7 +107,7 @@ public class OrderServiceImpl implements OrderService {
         });
 
         //Send back the order summary
-        OrderDTO orderDTO = modelMapper.map(order, OrderDTO.class);
+        OrderDTO orderDTO = modelMapper.map(savedOrder, OrderDTO.class);
 
         //Since OrderDTO has the OrderItemDTO entity
         orderItems.forEach(
