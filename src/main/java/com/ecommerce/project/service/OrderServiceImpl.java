@@ -53,15 +53,16 @@ public class OrderServiceImpl implements OrderService {
             String pgStatus,
             String pgResponseMessage
     ) {
-        //Getting user cart
-        Cart cart = cartRepository.findCartByEmail(emailId);
-        /*if (cart == null){
-           throw new ResourceNotFoundException("Cart", "emailId", emailId);
-        }*/
+            //Getting user cart
+            Cart cart = cartRepository.findCartByEmail(emailId);
+            if (cart == null){
+               throw new ResourceNotFoundException("Cart", "email", emailId);
+            }
         Address address = addressRepository.findById(addressId).orElseThrow(
                 () -> new ResourceNotFoundException("Address", "addressId", addressId)
         );
 
+        //System.out.println("before creating order");
         //Create a new order with payment info
         Order order = new Order();
         order.setEmail(emailId);
@@ -69,10 +70,14 @@ public class OrderServiceImpl implements OrderService {
         order.setTotalAmount(cart.getTotalPrice());
         order.setOrderStatus("Order Accepted!!");//default
         order.setAddress(address);
+        //System.out.println("Order DATA:: " +  order);
 
         Payment payment = new Payment(paymentMethod, pgPaymentId, pgStatus, pgResponseMessage, pgName);
         payment.setOrder(order);
+        //System.out.println("before creating payment");
+        //System.out.println("Payment DATA:: " + payment);
         payment = paymentRepository.save(payment);
+        //System.out.println("After inserting into payment table");
         order.setPayment(payment);
 
         Order savedOrder = orderRepository.save(order);
@@ -92,7 +97,6 @@ public class OrderServiceImpl implements OrderService {
             orderItem.setOrder(savedOrder);
             orderItems.add(orderItem);
         }
-
         orderItems = orderItemRepository.saveAll(orderItems);
 
         //Update product stock in the database
@@ -103,17 +107,17 @@ public class OrderServiceImpl implements OrderService {
             product.setQuantity(product.getQuantity() - quantity);
             productRepository.save(product);
             //clear the cart
-            cartService.deleteProductFromCart(cart.getCartId(), product.getProductId());
+            cartService.deleteProductFromCart(cart.getCartId(), item.getProduct().getProductId());
         });
 
         //Send back the order summary
-        OrderDTO orderDTO = modelMapper.map(order, OrderDTO.class);
+        OrderDTO orderDTO = modelMapper.map(savedOrder, OrderDTO.class);
 
         //Since OrderDTO has the OrderItemDTO entity
         orderItems.forEach(
-                orderItem ->
+                item ->
                 orderDTO.getOrderItems().add(
-                            modelMapper.map(orderItem, OrderItemDTO.class
+                            modelMapper.map(item, OrderItemDTO.class
                         )
                 )
         );
