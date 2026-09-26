@@ -50,6 +50,7 @@ public class OrderController {
     public ResponseEntity<String> createStripeClientSecret(
            @RequestBody StripePaymentDTO stripePaymentDTO
     ) throws StripeException {
+        //System.out.println("Stripe payment DTO ::" + stripePaymentDTO);
         PaymentIntent paymentIntent = stripeService.paymentIntent(stripePaymentDTO);
         return new ResponseEntity<>(paymentIntent.getClientSecret(), HttpStatus.CREATED);
     }
