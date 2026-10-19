@@ -67,6 +67,26 @@ public class CategoryController {
         return new ResponseEntity<>(categoryResponse, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/admin/categories", method = RequestMethod.GET)
+    public ResponseEntity<CategoryResponse> getAdminCategoriesForDashboard(
+            @RequestParam(name = "pageNumber", defaultValue = AppConstants.PAGE_NUMBER, required = false)
+            Integer pageNumber,
+
+            @RequestParam(name = "pageSize", defaultValue = AppConstants.PAGE_SIZE, required = false)
+            Integer pageSize,
+
+            @RequestParam(name = "sortBy", defaultValue = AppConstants.SORT_CATEGORIES_BY, required = false)
+            String sortBy,
+
+            @RequestParam(name = "sortOrder", defaultValue = AppConstants.SORT_DIR, required = false)
+            String sortOrder
+    ){
+        CategoryResponse categoryResponse = categoryService.getAllCategories(
+                pageNumber, pageSize, sortBy, sortOrder
+        );
+        return new ResponseEntity<>(categoryResponse, HttpStatus.OK);
+    }
+
     //@PostMapping("/public/categories")
     @Tag(name = "Category APIs", description = "APIs for managing categories")
     @RequestMapping(value = "/public/categories", method = RequestMethod.POST)
@@ -87,6 +107,25 @@ public class CategoryController {
             );
     }
 
+    @Tag(name = "Category APIs for Admin Dashboard", description = "APIs for managing categories for Admin Dashboard")
+    @RequestMapping(value = "/admin/categories", method = RequestMethod.POST)
+    public ResponseEntity<CategoryDTO> createCategoryAdmin(@Valid @RequestBody CategoryDTO categoryDTO){
+        CategoryDTO savedCategoryDTO = categoryService.createCategory(categoryDTO);
+        return new ResponseEntity<>(savedCategoryDTO, HttpStatus.CREATED);
+    }
+
+    //@PutMapping("/public/categories/{categoryId}")
+    @Tag(name = "Category APIs", description = "APIs for managing categories")
+    @RequestMapping(value = "/admin/categories/{categoryId}", method = RequestMethod.PUT)
+    public ResponseEntity<CategoryDTO> updateCategoryAdmin(@Valid @RequestBody CategoryDTO categoryDTO,
+                                                      @PathVariable Long categoryId){
+        CategoryDTO updatedCategoryDTO = categoryService.updateCategory(categoryDTO, categoryId);
+        return new ResponseEntity<>(
+                updatedCategoryDTO,
+                HttpStatus.OK
+        );
+    }
+
     //@DeleteMapping("/admin/categories/{categoryId}")
     @Tag(name = "Category APIs", description = "APIs for managing categories")
     @RequestMapping(value = "/admin/categories/{categoryId}", method = RequestMethod.DELETE)
@@ -96,4 +135,6 @@ public class CategoryController {
             CategoryDTO deleteCategory = categoryService.deleteCategory(categoryId);
             return ResponseEntity.status(HttpStatus.OK).body(deleteCategory);
     }
+
+
 }
