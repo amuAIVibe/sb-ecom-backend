@@ -51,6 +51,7 @@ public class User {
 
     @Getter
     @Setter
+    @EqualsAndHashCode.Exclude
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},
             fetch = FetchType.EAGER
     )
@@ -61,6 +62,7 @@ public class User {
     private Set<Role> roles = new HashSet<>();
 
 
+    @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @OneToMany(mappedBy = "user",
             cascade = {CascadeType.PERSIST, CascadeType.MERGE},
@@ -70,6 +72,7 @@ public class User {
 
     @Getter
     @Setter
+    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     /*@JoinTable(name = "user_address",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -77,6 +80,7 @@ public class User {
     )*/
     private List<Address> addresses = new ArrayList<>();
 
+    @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @OneToOne(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private Cart cart;

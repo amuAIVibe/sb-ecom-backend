@@ -27,6 +27,7 @@ public class AuthUtil {
 
     public Long loggedInUserId(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        assert authentication != null;
         User user = userRepository.findByUserName(authentication.getName())
                 .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + authentication.getName()));
 

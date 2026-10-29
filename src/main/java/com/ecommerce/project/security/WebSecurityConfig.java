@@ -78,6 +78,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) {
         http.cors(Customizer.withDefaults())
                         .csrf(AbstractHttpConfigurer::disable)
+                        .cors(cors -> {})
                         .exceptionHandling(
                                 exception -> exception.authenticationEntryPoint(unauthorizedHandler)
                         ).sessionManagement(session
@@ -88,6 +89,8 @@ public class WebSecurityConfig {
                                     .requestMatchers("/h2-console/**").permitAll()
                                     .requestMatchers("/swagger-ui/**").permitAll()
                                     .requestMatchers("/api/public/**").permitAll()//this endpoint allowing without authentication
+                                    .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                                    .requestMatchers("/api/seller/**").hasAnyRole("SELLER", "ADMIN")
                                     //.requestMatchers("/api/admin/**").permitAll()
                                     .requestMatchers("/api/test/**").permitAll()
                                     .requestMatchers("/images/**").permitAll()

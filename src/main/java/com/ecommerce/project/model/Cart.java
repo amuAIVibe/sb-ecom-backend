@@ -3,6 +3,7 @@ package com.ecommerce.project.model;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
@@ -19,10 +20,12 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cartId;
 
+    @EqualsAndHashCode.Exclude
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
 
+    @EqualsAndHashCode.Exclude
     @OneToMany(
             mappedBy = "cart",
             cascade = {CascadeType.PERSIST, CascadeType.MERGE,  CascadeType.REMOVE},
